@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "microeconometrics"
+version = "0.0.1"
+description = "Package for the microeconometrics self-studies"
+authors = ["ArrichM <maximilianjakob.arrich@student.unisg.ch>", "FBenkhalifa <florian.benkhalifa@student.unisg.ch>"]
+license = "Apache-2.0"
+readme = "README.md"
+homepage = "https://github.com/FBenkhalifa/microeconometrics"
+repository = "https://github.com/FBenkhalifa/microeconometric"
+
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+pre-commit = "^2.17.0"
+black = "^22.1.0"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+pytest-cov = "^3.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov=./src --cov-report term-missing --strict-markers"
+testpaths = ["tests"]
+
