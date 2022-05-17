@@ -50,3 +50,6 @@ mlruns/
 
 # mypy
 .mypy_cache/
+
+# Data
+paper/data/
