@@ -52,4 +52,4 @@ mlruns/
 .mypy_cache/
 
 # Data
-paper/data/
+data/
