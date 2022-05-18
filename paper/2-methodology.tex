@@ -3,15 +3,66 @@
 \subsection{Parameter of interest}
 We define $Y^1_i$ as the potential outcome, namely additional points per game of the visiting team, when the visiting
 team $i(i = 1, ..., N)$ has a higher market value ($D_i = 1$), where $D_i$ represents a binary treatment dummy variable.
-On the other hand, $Y_i^0$ reflects the potential outcome, when visiting team $i$ has lower market value than the opponent team ($D_i = 0$).
+On the other hand, $Y_i^0$ reflects the potential outcome, when visiting team $i$ has lower market value than the
+opponent team ($D_i = 0$).
 
 For an observation $i$, only one of the two outcomes can be observed and the realized outcome hence is:
 
 \[ Y_i = Y_i^1D_i + Y_i^0(1-D_i)\], with the causal effect of a higher market value on the outcome being $y_i = Y_i^1 - Y_is^0$.
 It is not possible to observe $y_i$ on an individual basis, but it is possible to estimate the conditional
-average treatment effect, based on the
+average treatment effect, based on the. Since we are facing an observational study, the extraction of the $ATE$ is not
+trivial, since a random assignment of the treatment cannot be assumed.
+
+\subsection{Identification}
+Concerning USTVA
 
 \subsection{Estimation}
+To identify the conditional average treatment effect, we employ two different approaches:
+In the first approach, we consider a Poisson regression to identify the parameters of interest. The Poisson regression
+is a generlaized linear model tailored to model count data and assumes the variable $Y$ to follow a Poisson distribution.
+The second approach is a partialling out, a general framework for estimating treatment effects with machine learning models.
+Partialling out has the strong advantage, that is imposes weaker assumptions about the function form of a model conditioning
+on confounders. This is particularly true under high-dimensional data, where machine learning models tend to perform
+considerately better than linear regressions. The interesting part of the approach is that, it breaks the algorithm
+down into two problems: A prediction problem, where the predictive performance is the focus of the model
+
+\subsubsection{Poisson regression}
+The Poisson regression assumes that the logarithm of the expected value van be modeled by a linear function of the
+unknown parameters. It is used for count data, which is data only taking integer values. The regression equation is given
+by:
+
+\begin{equation}
+    log(E(Y|x)) = \mathbf{\theta}' \mathbf{x}
+\end{equation}
+
+where $x$ are the covariate variables and the treatment.
+with the predicted mean of the associated Poisson distribution is given by $E(Y|X) = e^{\mathbf{\theta}'\mathbf{x}}$.
+We estimate the set of parameters by a maximum likelihood estimation using the Newtom-Raphson algorithm.
 
 \subsubsection{Partialling out}
-To identify the ATE, we apply a Partial Linear Model. Partialling out is a method used to
+A partially linear model has the following setup:
+
+\begin{equation}
+    Y = D \theta_0 + g_0(X) + U
+    D = m_0(X) + V
+\end{equation}
+
+where $\theta_0$ is the true treatment effect, and $g_0(X)$ is a mapping from $X$ to $Y$ conditional on $D$. Lastly,
+$m_0(X)$ is a function mapping $X$ to $D$.
+This starting point makes it possible for both $Y$ and $D$ to be non-linear and to be interactive functions of $X$ as
+opposed to OLS assuming additive relationships. This setup also allows the confounders to interact with each other.
+
+For the partially linear model, the general identification assumptions of unconfoundedness conditional on $X$,
+positivity and consistency, still apply.
+
+Modelling $m_0(x)$ and $g_0(x)$ is a crucial part of the identification. They should be conducted by a random forest for example.
+
+For the problem at hand, we use a random forest algorithm to model the $m_0(x)$ and $g_0(x)$. A random forest is a is a
+tree-based regression method, which uses bagging in combination with random sampling of the predictors. In bagging, first
+B bootstraps samples are taken from the original data and on each a tree is fitted. Then the average of the predictions
+is computed, and predictions are made for the out-of-bag observations, which can be used to receive unbiased
+estimates for the loss metrics. While building the trees for each bootstrap sample, a random sample of m predictors is
+chosen to split candidates from the full set of $p$ predictors (James et al., 2013, p. 319). This serves the
+decorrelation of each tree. Hyperparameter to be tuned are the number of variables to possibly split at
+each node, the metric used as splitting rule and the minimum node size.
+
