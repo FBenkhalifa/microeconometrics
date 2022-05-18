@@ -55,14 +55,20 @@ opposed to OLS assuming additive relationships. This setup also allows the confo
 For the partially linear model, the general identification assumptions of unconfoundedness conditional on $X$,
 positivity and consistency, still apply.
 
-Modelling $m_0(x)$ and $g_0(x)$ is a crucial part of the identification. They should be conducted by a random forest for example.
+\subsubsection{Estimation}
 
-For the problem at hand, we use a random forest algorithm to model the $m_0(x)$ and $g_0(x)$. A random forest is a is a
+
+Modelling $m_0(x)$ and $g_0(x)$ is a crucial part of the identification and can be conducted by machine learning models.
+
+For the problem at hand, we use a random forest algorithm to model the $m_0(x)$ and $g_0(x)$. A random forest is a
 tree-based regression method, which uses bagging in combination with random sampling of the predictors. In bagging, first
-B bootstraps samples are taken from the original data and on each a tree is fitted. Then the average of the predictions
+$B$ bootstraps samples are taken from the original data and on each a tree is fitted. Then the average of the predictions
 is computed, and predictions are made for the out-of-bag observations, which can be used to receive unbiased
-estimates for the loss metrics. While building the trees for each bootstrap sample, a random sample of m predictors is
-chosen to split candidates from the full set of $p$ predictors (James et al., 2013, p. 319). This serves the
+estimates for the loss metrics. While building the trees for each bootstrap sample, a random sample of $m$ predictors is
+chosen to split candidates from the full set of $p$ predictors \cite[~p. 319]{james2013}. This serves the
 decorrelation of each tree. Hyperparameter to be tuned are the number of variables to possibly split at
 each node, the metric used as splitting rule and the minimum node size.
+
+To optimize the performance of the model, we hyperparemter tune the random forest in a 10-fold cross validation procedure.
+
 
