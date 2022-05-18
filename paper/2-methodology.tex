@@ -1,0 +1,17 @@
+\section{Introduction}
+
+\subsection{Parameter of interest}
+We define $Y^1_i$ as the potential outcome, namely additional points per game of the visiting team, when the visiting
+team $i(i = 1, ..., N)$ has a higher market value ($D_i = 1$), where $D_i$ represents a binary treatment dummy variable.
+On the other hand, $Y_i^0$ reflects the potential outcome, when visiting team $i$ has lower market value than the opponent team ($D_i = 0$).
+
+For an observation $i$, only one of the two outcomes can be observed and the realized outcome hence is:
+
+\[ Y_i = Y_i^1D_i + Y_i^0(1-D_i)\], with the causal effect of a higher market value on the outcome being $y_i = Y_i^1 - Y_is^0$.
+It is not possible to observe $y_i$ on an individual basis, but it is possible to estimate the conditional
+average treatment effect, based on the
+
+\subsection{Estimation}
+
+\subsubsection{Partialling out}
+To identify the ATE, we apply a Partial Linear Model. Partialling out is a method used to
