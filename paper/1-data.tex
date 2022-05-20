@@ -3,9 +3,34 @@
 The dataset contains various features about match outcomes, schedule, game specifics and team characteristics from the
 first soccer division in Switzerland. The data is collected from $2005/2006$ until $2021/2022$ and includes 2500
 matches and 100 variables.
-% Data specifics:
-Table \ref{tab:summary} describes the summary statistics of the dataset, of a selected choice of variables.
 
-% What is n?
+% Table: team summary
+Table \ref{tab:team-summary} reports aggregated information of all the teams which are participating in the Swiss soccer
+league concerning the points in combination with their relative expensiveness. The teams are ordered by the average points
+per match.
+
+% Table: team summary
+From a first glance the relationship between the proportion of matches where the visting team had a higher market value ($ratio_more_expensive$)
+than the home team and the average points per match is not obvious. The first three teams are concordant in the average
+scores per match and the $ratio_more_expensive$ variable but the remaining teams do not exhibit this clear trend. However,
+higher points per match seem to be more frequent with higher valued visiting teams.
+
+% Table: market-value-summary
+Table \ref{tab:market-value-summary} reports descriptive statistics of a selection of variables by the two status of
+the visiting team being higher valued than the home team. The variables displayed have been chosen according to the
+correlation between the status of the visiting team being higher valued than the home team and the average points per match.
+
+It can be seen, that the average team market value for a higher valued visiting team is roughly two times higher than
+the lower team. A similar relation can be observed with the average points of the visiting team, which is approximately
+twice as high for the visiting team, if it is considered as a higher valued team.
+Another interesting observation is average number of national players in a higher valued visiting team, which obviously
+corresponds with national players having a higher market value.
+
+% Plot:
+Figure \ref{fig:scatter} reveals how the points per match vary with respect to visiting team being more expensive or not.
+The red dot marks the average points per match for the respective category. 3-point matches seem to be more frequent
+with higher valued visiting teams.
+
+
 
 
